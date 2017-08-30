@@ -122,9 +122,11 @@ class Shortener(http.server.BaseHTTPRequestHandler):
 
         # Check that the user submitted the form fields.
         if "longuri" not in params or "shortname" not in params:
-            # 3. Serve a 400 error with a useful message.
-            #    Delete the following line.
-            raise NotImplementedError("Step 3 isn't written yet!")
+            self.send_response(400)
+            self.send_header('Content-type', 'text/plain; charset=utf-8')
+            self.end_headers()
+            self.wfile.write("Please check form fields.".encode())
+            return
 
         longuri = params["longuri"][0]
         shortname = params["shortname"][0]
