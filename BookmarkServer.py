@@ -44,6 +44,7 @@
 import http.server
 import requests
 from urllib.parse import unquote, parse_qs
+import validators
 
 memory = {}
 
@@ -74,8 +75,12 @@ def CheckURI(uri, timeout=5):
     False if that GET request returns any other response, or doesn't return
     (i.e. times out).
     '''
-    # 1. Write this function.  Delete the following line.
-    raise NotImplementedError("Step 1 isn't written yet.")
+    try:
+        r = requests.get(uri)
+        return r.status_code == 200
+    except requests.exceptions.RequestException as e:
+        # print(e)
+        return False
 
 
 class Shortener(http.server.BaseHTTPRequestHandler):
