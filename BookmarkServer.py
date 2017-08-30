@@ -135,9 +135,9 @@ class Shortener(http.server.BaseHTTPRequestHandler):
             # This URI is good!  Remember it under the specified name.
             memory[shortname] = longuri
 
-            # 4. Serve a redirect to the root page (the form).
-            #    Delete the following line.
-            raise NotImplementedError("Step 4 isn't written yet!")
+            self.send_response(303)
+            self.send_header('Location', '/')
+            self.end_headers()
         else:
             # Didn't successfully fetch the long URI.
 
